@@ -1,19 +1,26 @@
 const express = require("express");
 const app = express();
+app.use(require('body-parser').urlencoded({ extended: false }));
+
 const port = process.env.PORT || 3001;
+
+const handleForm = (req, res) => {
+  return "The sum of your numbers is: " + (+req.body.firstNum + +req.body.secondNum); 
+}
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 app.get("/", (req, res) => res.type('html').send(sayHello));
 
-app.post("/handle_form", (req, res) => res.type('html').send(handleForm(req)));
+app.post("/handle_form", (req, res) => res.type('html').send(handleForm(req, res)));
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 
 const sayHello = `
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Hello from Render!</title>
+    <title>Hello InceptionU!</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
       setTimeout(() => {
@@ -36,7 +43,7 @@ const sayHello = `
       html {
         font-family: neo-sans;
         font-weight: 700;
-        font-size: calc(62rem / 16);
+        font-size: calc(62rem / 32);
       }
       body {
         background: white;
@@ -53,15 +60,21 @@ const sayHello = `
     </style>
   </head>
   <body>
-    <section>
-      Hello from Render!
-    </section>
-    <section>
-      <form action="/handle_form" method="POST">
-        <label>City:</label>
-        <input type="text" name="city" />
-        <input type="submit" />
-      </form>
+    <div>
+        Hello InceptionU!
+    </div>
+    <br/><br/>
+    <div>
+        <form action="/handle_form" method="POST">
+          <label for="First Number">First Number:</label>
+          <input type="text" id="firstNum" name="firstNum" />
+          <br />
+          <label for="Second Number">Second Number:</label>
+          <input type="text" id="secondNum" name="secondNum" />
+          <br />
+          <input type="submit" value="submit" />
+        </form>
+    </div>
   </body>
 </html>
 `
