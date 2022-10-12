@@ -2,12 +2,14 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.get("/", (req, res) => res.type('html').send(html));
+app.get("/", (req, res) => res.type('html').send(sayHello));
+
+app.post("/handle_form", (req, res) => res.type('html').send(handleForm(req));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 
-const html = `
+const sayHello = `
 <!DOCTYPE html>
 <html>
   <head>
@@ -54,6 +56,12 @@ const html = `
     <section>
       Hello from Render!
     </section>
+    <section>
+      <form action="/handle_form" method="POST">
+        <label>City:</label>
+        <input type="text" name="city" />
+        <input type="submit" />
+      </form>
   </body>
 </html>
 `
